@@ -1,0 +1,60 @@
+#include <Attendance.h>
+Attendance att;
+    char status[20];
+    char id[20], name[50];
+
+    printf("Enter ID:");
+    readLine(id, sizeof(id));
+    att.id = atoi(id);
+
+    printf("Enter Name:");
+    readLine(name, sizeof(name));
+    strncpy(att.name, name, sizeof(att.name)-1);
+    att.name[sizeof(att.name)-1] = '\0'
+
+    getCurrentDateTime(att.date, att.time);
+
+    while (1) {
+        printf("Enter status (Present/Absent/Late):");
+        readLine(status, sizeof(status));
+        if (strlen(status) == 0) {
+            printf("Status cannot be empty.\n");
+            continue;
+        }
+        strncpy(att.status, status, sizeof(att.status)-1);
+        att.status[sizeof(att.status)-1]= '\0';
+        break;
+    }
+
+    FILE *fp = fopen (DATA_FILE, "a");
+    if (!fp) {
+        perror("Error opening data file");
+        return;
+    }
+
+    fprintf(fp, "%d,%s,%s,%s,%s\n" att.id, att.name, att.time, att.time, att.status);
+    fclose(fp);
+
+    printf("Attendance record successfully.\n");
+}
+
+void viewDailyAttendance() {
+    char input[20];
+    char targetDate[11];
+
+    printf("Enter date (YYYY-MM-DD):");
+    readLine(input, sizeof(input));
+    if (strlen(input) == 0) {
+        getCurrentDateTime(targetDate, (char[6]));
+    } else {
+        strncpy(targetDate, input, sizeof(targetDate)-1);
+        targetDate[sizeof(targetDate)-1] = '\0';
+    }
+
+    FILE *fp = fopen(DATA_FILE, "r");
+    if (!fp) {
+        printf("No records found.\n");
+        return;
+    }
+
+}
