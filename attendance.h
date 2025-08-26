@@ -15,12 +15,14 @@ typedef struct {
     char date[11]; //format: YYYY-MM-DD
     char time[6]; //format:HH:MM
     char status[10]; //present,absent,late
+    char line[200];
 
-}  Attendance;
+} Attendance;
 
 //utility
-void getCurrentDateTime(char *dateStr, char *timeStr);
-void readLine(char *buf, int size);
+void getCurrentDateTime(char *date, char *time);
+void readLine(char *buffer, int size);
+const char *filename = "attendance.txt"; 
 
 //login
 int adminLogin();
